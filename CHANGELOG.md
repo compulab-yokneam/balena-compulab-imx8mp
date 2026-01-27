@@ -2,6 +2,11 @@
 
 # v6.0.5
 
+# v6.10.20+rev1
+## (2026-01-27)
+
+* balena-image: Add the imx-firmware-mrvl to the IMAGE_INSTALL list. [Valentin Raevsky]
+
 # v6.10.20
 ## (2026-01-26)
 

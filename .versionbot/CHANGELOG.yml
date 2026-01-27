@@ -1,4 +1,29 @@
 - commits:
+    - subject: "balena-image: Add the imx-firmware-mrvl to the IMAGE_INSTALL list."
+      hash: 05c893490757180c73ff3aab62ca2737f66b2042
+      body: |
+        Add the imx-firmware-mrvl to the IMAGE_INSTALL list.
+
+        Investigation:
+        This firmware is already in the CompuLab repository:
+        https://github.com/compulab-yokneam/meta-bsp-imx8mp/blob/649a638ee1fbfeef62358bdd7bfaf7f6aa72ccbc/conf/machine/compulab-imx8mp.inc#L67
+
+        This command: ``bitbake-getvar -r balena-image MACHINE_FIRMWARE``
+        issued in the ${BUILDDIR} folder does return the imx-firmware-mrvl package.
+
+        Looks like the "MACHINE_FIRMWARE" ignored by BalenaOS build image
+        class, as a result the listed packages are not include in the image.
+      footer:
+        Changelog-entry: "balena-image: Add the imx-firmware-mrvl to the IMAGE_INSTALL list."
+        changelog-entry: "balena-image: Add the imx-firmware-mrvl to the IMAGE_INSTALL list."
+        Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+        signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+      author: Valentin Raevsky
+      nested: []
+  version: 6.10.20+rev1
+  title: ""
+  date: 2026-01-27T08:38:17.402Z
+- commits:
     - subject: Update layers/meta-balena to f9543178d5ecb5b633cc139a0a56ce0b17ecce67
       hash: 3640e52ee2a82316b3d267bae3903ff24dc6e4c6
       body: Update layers/meta-balena
