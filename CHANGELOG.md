@@ -2,6 +2,22 @@
 
 # v6.0.5
 
+# v6.11.1+rev1
+## (2026-02-18)
+
+
+<details>
+<summary> Update balena-yocto-scripts to c6e9aac2a209790c00790d57b44fdce91a678159 [balena-renovate[bot]] </summary>
+
+> ## balena-yocto-scripts-1.39.27
+> ### (2026-02-13)
+> 
+> * Remove dead AMI script and its Dockerfile dependencies [Kyle Harding]
+> * Replace deprecated `balena key add` with `balena ssh-key add` [Kyle Harding]
+> 
+
+</details>
+
 # v6.11.1
 ## (2026-02-17)
 
