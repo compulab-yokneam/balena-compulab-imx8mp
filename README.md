@@ -1,4 +1,4 @@
-#  balena-iotdin-imx8p repository
+#  balena-compulab-imx8p repository
 
 ## Clone/Initialize the repository
 
