@@ -9,4 +9,5 @@ SRC_URI:append = " \
 	file://20001-balena-Fix-env-mmc.c-build-issue.patch \
 	file://20002-balena-Disable-BINMAN.patch \
 	file://20003-balena-Move-up-the-resin_set_kernel_root-and-set_os.patch \
+	file://30000-balena-iot-gate-imx8plus-Disable-BINMAN.patch \
 "
