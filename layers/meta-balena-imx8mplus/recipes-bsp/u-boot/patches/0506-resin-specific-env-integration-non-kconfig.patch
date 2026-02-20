@@ -1,0 +1,17 @@
+From 3e0868378e401b3b7694736ba762fc5e0e984a03 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Fri, 20 Feb 2026 11:11:38 +0200
+Subject: [PATCH] resin-specific-env-integration-non-kconfig
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ resin-specific-env-integration-non-kconfig | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 resin-specific-env-integration-non-kconfig
+
+diff --git a/resin-specific-env-integration-non-kconfig b/resin-specific-env-integration-non-kconfig
+new file mode 100644
+index 00000000000..e69de29bb2d
+-- 
+2.34.1
+

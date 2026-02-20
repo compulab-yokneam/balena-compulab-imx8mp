@@ -1,0 +1,87 @@
+From 2905b464801cae83e8e810f2791e98091ee55cfe Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Fri, 20 Feb 2026 11:12:11 +0200
+Subject: [PATCH] compulab-imx8m-plus: Add BalenOS environmet
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ include/configs/compulab-balena-env.h | 45 +++++++++++++++++++++++++++
+ include/configs/compulab-imx8m-plus.h |  3 ++
+ 2 files changed, 48 insertions(+)
+ create mode 100644 include/configs/compulab-balena-env.h
+
+diff --git a/include/configs/compulab-balena-env.h b/include/configs/compulab-balena-env.h
+new file mode 100644
+index 00000000000..1bdd771d5c8
+--- /dev/null
++++ b/include/configs/compulab-balena-env.h
+@@ -0,0 +1,45 @@
++#ifndef __COMPULAB_BALENA_ENV
++#define __COMPULAB_BALENA_ENV
++
++#define CFG_BALENA_FDT_ADDR_R	0x45000000
++#define CFG_BALENA_FDTO_ADDR_R	0x45800000
++#define CFG_BALENA_FDT_ADDR	0x45000000
++#define CFG_BALENA_ZIP_ADDR	0x48440000
++
++#define CFG_BALENA_ENV_SETTINGS	\
++		"resin_kernel_load_addr=" __stringify(CONFIG_SYS_LOAD_ADDR) "\0" \
++		"balena_image=Image.gz\0" \
++		"balena_fdt_addr_r=" __stringify(CFG_BALENA_FDT_ADDR_R) "\0" \
++		"balena_fdto_addr_r=" __stringify(CFG_BALENA_FDTO_ADDR_R) "\0" \
++		"balena_fdt_addr=" __stringify(CFG_BALENA_FDT_ADDR) "\0" \
++		"balena_zip_addr=" __stringify(CFG_BALENA_ZIP_ADDR) "\0" \
++		"balena_load_image=if load ${iface} ${resin_dev_index}:${resin_root_part} ${balena_zip_addr} boot/${balena_image}; then unzip ${balena_zip_addr} ${resin_kernel_load_addr}; run balena_kernel_load_crc_save; else false; fi; \0" \
++		"balena_load_fdt=if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
++			"load ${iface} ${resin_dev_index}:${resin_root_part} ${balena_fdt_addr_r} boot/${fdtfile} && run balena_fdt_load_crc_save;" \
++		"fi;\0" \
++		"emmc_balena=setenv iface mmc; setenv dev ${resin_dev_index}; setenv part ${resin_root_part};" \
++		"setenv bootargs console=${console} ${resin_kernel_root} ${os_cmdline};\0" \
++		"balena_bootlist=emmc_balena\0" \
++		"balena_bootcmd=echo Running Balena bootcmd ...; " \
++		"for src in ${balena_bootlist}; do " \
++			"run resin_set_kernel_root; run set_os_cmdline;" \
++			"echo Running ${src} ...; " \
++			"run ${src}; " \
++			"env exist boot_opt && env exists bootargs && setenv bootargs ${bootargs} ${boot_opt}; " \
++			"if run ulbootscript; then " \
++				"run ulrunbootscript; " \
++			"fi; " \
++			"if run balena_load_image; then " \
++				"if run balena_load_fdt; then " \
++					"run balena_kernel_load_crc_check; " \
++					"run balena_fdt_load_crc_check; " \
++					"booti ${resin_kernel_load_addr} - ${balena_fdt_addr_r}; " \
++				"else " \
++					"if test ${boot_fdt} != yes; then " \
++						"booti ${resin_kernel_load_addr}; " \
++					"fi; " \
++				"fi; " \
++			"fi; " \
++		"done; "
++
++#endif
+diff --git a/include/configs/compulab-imx8m-plus.h b/include/configs/compulab-imx8m-plus.h
+index 954c5edbdd9..ebf85a79831 100644
+--- a/include/configs/compulab-imx8m-plus.h
++++ b/include/configs/compulab-imx8m-plus.h
+@@ -10,6 +10,8 @@
+ #include <asm/arch/imx-regs.h>
+ 
+ #include "imx_env.h"
++#include <env_resin.h>
++#include "compulab-balena-env.h"
+ 
+ #define CFG_SYS_UBOOT_BASE	(QSPI0_AMBA_BASE + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512)
+ 
+@@ -43,6 +45,7 @@
+ 	CFG_MFG_ENV_SETTINGS \
+ 	BOOTENV \
+ 	MACHINE_EXTRA_ENV_SETTINGS \
++	CFG_BALENA_ENV_SETTINGS \
+ 	"video_link=1\0" \
+ 	"stdout=serial,vidconsole\0" \
+ 	"stderr=serial,vidconsole\0" \
+-- 
+2.34.1
+
