@@ -24,4 +24,4 @@ do_install() {
 
 FILES:${PN} = "/init.d/75-rollback_fixup"
 
-COMPATIBLE_MACHINE = "(iot-gate-imx8plus|iot-gate-imx8plus-d1d8|iot-gate-imx8plus-sb)"
+COMPATIBLE_MACHINE = "(iot-gate-imx8plus|iot-gate-imx8plus-d1d8|iot-gate-imx8plus-sb|iot-gate-imx8pv2)"

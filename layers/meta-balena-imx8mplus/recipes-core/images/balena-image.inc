@@ -12,8 +12,15 @@ BALENA_BOOT_PARTITION_FILES:append:iot-gate-imx8plus = " \
     balena-bootloader/bootenv:/bootenv \
 "
 
+BALENA_BOOT_PARTITION_FILES:append:iot-gate-imx8pv2 = " \
+    ${KERNEL_DEVICE_TREES} \
+    balena-bootloader/${KERNEL_IMAGETYPE}-initramfs-${MACHINE}.bin:/${KERNEL_IMAGETYPE} \
+    balena-bootloader/bootenv:/bootenv \
+"
+
 BALENA_BOOTLOADER_DEPLOY_DEPENDENCY = ""
 BALENA_BOOTLOADER_DEPLOY_DEPENDENCY:iot-gate-imx8plus = "virtual/balena-bootloader:do_deploy"
+BALENA_BOOTLOADER_DEPLOY_DEPENDENCY:iot-gate-imx8pv2 = "virtual/balena-bootloader:do_deploy"
 
 do_rootfs[depends] += " ${BALENA_BOOTLOADER_DEPLOY_DEPENDENCY}"
 do_image_balenaos_img[depends] += " ${BALENA_BOOTLOADER_DEPLOY_DEPENDENCY}"
@@ -42,6 +49,10 @@ IMAGE_INSTALL:append:iot-gate-imx8plus = " \
     iot-gate-imx8plus-config \
     "
 
+IMAGE_INSTALL:append:iot-gate-imx8pv2 = " \
+    grub-editenv \
+    "
+
 IMAGE_INSTALL:remove = "kernel-image"
 IMAGE_INSTALL:remove = "packagegroup-fsl-optee-imx"
 IMAGE_INSTALL:remove = "jailhouse"
@@ -49,13 +60,5 @@ IMAGE_INSTALL:remove = "jailhouse"
 CORE_IMAGE_EXTRA_INSTALL:remove = " gpsd gps-utils connman wvdial ppp modemmanager "
 IMAGE_ROOTFS_SIZE = "487424"
 
-BALENA_BOOT_SIZE:iotdin-imx8p-d1d8 = "40960"
-BALENA_STATE_SIZE:iotdin-imx8p-d1d8 = "20480"
-BALENA_BOOT_SIZE:iotdin-imx8p = "40960"
-BALENA_STATE_SIZE:iotdin-imx8p = "20480"
-
-BALENA_BOOT_SIZE:iot-gate-imx8plus-d1d8 = "40960"
-BALENA_STATE_SIZE:iot-gate-imx8plus-d1d8 = "20480"
-BALENA_BOOT_SIZE:iot-gate-imx8plus = "40960"
-BALENA_STATE_SIZE:iot-gate-imx8plus = "20480"
-
+BALENA_BOOT_SIZE:compulab-mx8mp = "40960"
+BALENA_STATE_SIZE:compulab-mx8mp = "20480"
